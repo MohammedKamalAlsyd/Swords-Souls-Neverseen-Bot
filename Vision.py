@@ -10,7 +10,7 @@ class vision:
     # TM_CCOEFF, TM_CCOEFF_NORMED, TM_CCORR, TM_CCORR_NORMED, TM_SQDIFF, TM_SQDIFF_NORMED
 
 
-    def _calculate_rescale_percentage(self,new_width, new_height,original_width=1980, original_height=1080): # original_width & original_width from Cropped template original dim
+    def _calculate_rescale_percentage(self,new_width, new_height,original_width=720, original_height=400): # original_width & original_width from Cropped template original dim
         width_scale = new_width / original_width
         height_scale = new_height / original_height
         return width_scale, height_scale
@@ -45,7 +45,6 @@ class vision:
         # Formulate Rectangles
         rectangles = [(rec[0], rec[1], self.template_width, self.template_height) for rec in top_left_corners]
         rectangles, weights = cv.groupRectangles(rectangles, group_treshold, eps)
-
         if len(rectangles) > max_results:
             print('Warning: too many results, raise the threshold.')
             rectangles = rectangles[:max_results]

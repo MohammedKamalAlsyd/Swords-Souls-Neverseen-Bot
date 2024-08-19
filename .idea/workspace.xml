@@ -4,24 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05c7b8e8-fdb5-4373-8a6f-a494a3cfa252" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/Swords &amp; Souls Neverseen GameBot.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Images/Melee Training/TrainingV1_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Images/Melee Training/TrainingV1_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Templates/Apple1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Templates/Gear1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Data/Templates/Target.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HSVFilter.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ScreenshotCapture.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Vision.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utilities.py" afterDir="false" />
+    <list default="true" id="05c7b8e8-fdb5-4373-8a6f-a494a3cfa252" name="Changes" comment="Version 0.1 - Added Needed Classes">
+      <change afterPath="$PROJECT_DIR$/Data/Templates/CannyTarget.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Images/Melee Training/TrainingV1_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Images/Melee Training/TrainingV1_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Templates/Apple1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Templates/Gear1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Templates/Target.png" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Templates/Target.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HSVFilter.py" beforeDir="false" afterPath="$PROJECT_DIR$/HSVFilter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScreenshotCapture.py" beforeDir="false" afterPath="$PROJECT_DIR$/WindowCapture.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vision.py" beforeDir="false" afterPath="$PROJECT_DIR$/Vision.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/utilities.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +32,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
@@ -51,14 +52,18 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Python.Combine Templates.executor": "Run",
+    "Python.HSVFilter.executor": "Run",
     "Python.ScreenshotCapture.executor": "Run",
     "Python.Vision.executor": "Debug",
+    "Python.WindowCapture.executor": "Run",
     "Python.main.executor": "Run",
     "Python.test.executor": "Run",
+    "Python.tt.executor": "Run",
     "Python.utilities.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/AKA/PycharmProjects/Swords & Souls Neverseen GameBot/Data/Templates"
+    "git-widget-placeholder": "FirstMode",
+    "last_opened_file_path": "C:/Users/AKA/PycharmProjects/Swords & Souls Neverseen GameBot/Data/Templates",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -72,6 +77,35 @@
       <recent name="C:\Users\AKA\PycharmProjects\Swords &amp; Souls Neverseen GameBot" />
       <recent name="C:\Users\AKA\PycharmProjects\Swords &amp; Souls Neverseen GameBot\Data\Images\Melee Training" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Swords &amp; Souls Neverseen GameBot" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -89,6 +123,41 @@
       <option name="presentableId" value="Default" />
       <updated>1723416638905</updated>
     </task>
+    <task id="LOCAL-00001" summary="Version 0.1 - Added Needed Classes">
+      <option name="closed" value="true" />
+      <created>1723742429473</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1723742429473</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Version 0.1 - Added Needed Classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 0.1 - Added Needed Classes" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>12</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

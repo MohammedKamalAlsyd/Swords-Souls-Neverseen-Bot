@@ -1,4 +1,4 @@
-from ScreenshotCapture import Screen
+from WindowCapture import Screen
 from time import time
 import numpy as np
 import cv2 as cv
