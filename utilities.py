@@ -1,6 +1,6 @@
 import win32gui
 from time import time
-from ScreenshotCapture import Screen
+from WindowCapture import Screen
 import cv2 as cv
 
 

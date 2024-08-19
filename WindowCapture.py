@@ -4,43 +4,68 @@ import win32con
 import numpy as np
 import cv2 as cv
 import time
+from threading import Thread, Lock
 
 
 class Screen:
+    # Threading Properties
+    _stopped = True # To Stop Capture if Stopped
+    _lock = None # Act as Semaphore
+    _screenshot = None
+    # Class Properties
     _window_name = None
     _hwnd = None
     _h = 1080
     _w = 1920
-    _TL_x = 0
-    _TL_y = 0
+    # Top Left Axes
+    local_TL_x = 0
+    local_TL_y = 0
+    # Position After Cropping
+    global_TL_x = 0
+    global_TL_y = 0
 
 
     def __init__(self,window_name=None,max_fps=30,borders_pixels = 8,titlebar_pixels=31):
         self._window_name = window_name
         self.max_fps = max_fps
         self.interval = 1.0 / max_fps  # Interval in seconds
+        self._lock = Lock()
 
         if self._window_name:
             self._hwnd = win32gui.FindWindow(None, self._window_name)
+            if not self._hwnd:
+                print("Window Not Found. Please Check The Name")
+                exit(0)
         else:
             self._hwnd = win32gui.GetDesktopWindow()
 
-        rect = win32gui.GetWindowRect(self._hwnd)
+        rect = win32gui.GetWindowRect(self._hwnd) # (TL_x,TL_y,width,height)
         self._w = rect[2] - rect[0]
         self._h = rect[3] - rect[1]
+
 
         # apply some croping as pywin32 capture the whole windows including the borders
         if self._window_name:
             self._w = self._w - (borders_pixels * 2)
             self._h = self._h - titlebar_pixels - borders_pixels
-            self._TL_x = borders_pixels
-            self._TL_y = titlebar_pixels
+            self.local_TL_x = borders_pixels
+            self.local_TL_y = titlebar_pixels
+
+        # Actual Positions
+        self.global_TL_x = rect[0] + self.local_TL_x
+        self.global_TL_y = rect[1] + self.local_TL_y
+
 
 
     def getWindowDim(self):
         return self._w,self._h
 
-    def capture(self):
+
+    def get_screen_position(self, pos):
+        return (pos[0] + self.global_TL_x, pos[1] + self.global_TL_y)
+
+
+    def _capture(self):
         # To Capture 1 Frame Time
         start_time = time.time()
 
@@ -55,7 +80,7 @@ class Screen:
         cDC.SelectObject(dataBitMap)
 
         # Capture the screenshot
-        cDC.BitBlt((0, 0), (self._w, self._h), dcObj, (self._TL_x, self._TL_y), win32con.SRCCOPY)
+        cDC.BitBlt((0, 0), (self._w, self._h), dcObj, (self.local_TL_x, self.local_TL_y), win32con.SRCCOPY)
 
         # Convert the bitmap to a NumPy array for OpenCV
         signedIntsArray = dataBitMap.GetBitmapBits(True)
@@ -80,6 +105,27 @@ class Screen:
 
         return img
 
+
+    def start(self):
+        self._stopped=False
+        t = Thread(target=self._run)
+        t.start()
+
+
+    def _run(self):
+        while not self._stopped:
+            # get an updated image of the game
+            screenshot = self._capture()
+            # lock the thread while updating the results
+            self._lock.acquire()
+            self._screenshot = screenshot
+            self._lock.release()
+
+
+    def getCurrScreen(self):
+        return self._screenshot
+
+
     @staticmethod
     def listWindowsNames():
         def winEnumHandler(hwnd, ctx):
@@ -87,4 +133,3 @@ class Screen:
                 print(hex(hwnd), win32gui.GetWindowText(hwnd))
 
         win32gui.EnumWindows(winEnumHandler, None)
-
