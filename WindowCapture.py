@@ -17,10 +17,10 @@ class Screen:
     _hwnd = None
     _h = 1080
     _w = 1920
-    # Top Left Axes
+    ## Top Left Axes
     local_TL_x = 0
     local_TL_y = 0
-    # Position After Cropping
+    ## Position After Cropping
     global_TL_x = 0
     global_TL_y = 0
 

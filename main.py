@@ -7,43 +7,45 @@ import numpy as np
 import cv2 as cv
 
 
-debug_mode = True
-
-
 if __name__ == "__main__":
+    # Initialize Classes
     scr = Screen("Swords & Souls Neverseen", 40)
+    w, h = scr.getWindowDim()
+    vis = vision("Data/Templates/Target.png", w, h)
+    hsv_filter = HsvFilter()
+    hsv_values = HsvValues(0, 0, 100, 179, 116, 255, 0, 0, 0, 0)  # Best Filter After Debugging
 
 
     # Initialize Some Variables
-    w, h = scr.getWindowDim()
+    loop_time = time()
+    debug_mode = True
 
-    # Starting Threads
+
+    # Starting Threads / HSV Filter GUI if needed
     scr.start()
+    vis.start(0.7)
+    if debug_mode: hsv_filter.initControlGUI()
+
+
+    while True:
+        # Processing the image
+        img = scr.getCurrScreen()
+        if img is None: continue
+        img = img[int(h//2.2):h, w//4:(3*w)//4]
+
+        # Applying HSV Filter
+        if debug_mode: img = hsv_filter.applyHSVFilter(img,hsv_values)
+        else:
+            img = hsv_filter.applyHSVFilter(img,hsv_values) #Apply Best Values
+
+        # Finding Rectangles
+        vis.update(img)
+        rectangles = vis.getRectangles()
+        if debug_mode: img = vision.drawRectangles(img, rectangles)
 
 
 
-    # vis = vision("Data/Templates/Target.png", w, h)
-    # hsv_values = HsvValues(0, 0, 100, 179, 116, 255, 0, 0, 0, 0)  # Best Filter After Debugging
-    #
-    # loop_time = time()
-    # hsv_filter = HsvFilter()
-    # if debug_mode: hsv_filter.initControlGUI()
-    #
-    # while True:
-    #     # Processing the image
-    #     img = scr.capture()
-    #     img = img[int(h//2.2):h, w//4:(3*w)//4]
-    #
-    #     # Applying HSV Filter
-    #     if debug_mode: img = hsv_filter.applyHSVFilter(img,hsv_values)
-    #     else:
-    #         hsv_filter.applyHSVFilter(img,hsv_values) #Apply Best Values
-    #
-    #
-    #     rectangles, _ = vis.find(img,0.7)
-    #     img = vision.drawRectangles(img, rectangles)
-    #
-    #
+
     #     # if 1 <= rectangles.shape[0] < 3: #not isinstance(rectangles,tuple ) and
     #     #     # Getting Missing Rectangles
     #     #     keys = {'a', 'w', 'd'}
@@ -62,12 +64,12 @@ if __name__ == "__main__":
     #
     #
     #
-    #     cv.imshow("Test Screen", img)
-    #     # Calculate and display the FPS
-    #     if debug_mode:
-    #         fps = 1 / (time() - loop_time)
-    #         print('FPS: {:.2f}'.format(fps))
-    #     loop_time = time()
+        # cv.imshow("Test Screen", img)
+        # # Calculate and display the FPS
+        # if debug_mode:
+        #     fps = 1 / (time() - loop_time)
+        #     print('FPS: {:.2f}'.format(fps))
+        # loop_time = time()
     #
     #     # Press 'q' with the output window focused to exit
     #     if cv.waitKey(1) == ord('q'):
