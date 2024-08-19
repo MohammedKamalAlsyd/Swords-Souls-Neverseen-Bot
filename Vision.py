@@ -34,10 +34,8 @@ class vision:
         except:
             print(f"Failed to read {template_path}")
             exit(0)
-        print(self.template.shape)
         width_scale, height_scale = self._calculate_rescale_percentage(new_width,new_height)  # Need to get Curr Windows Size
         self.template = cv.resize(self.template, None, fx=width_scale, fy=height_scale, interpolation=cv.INTER_LINEAR)
-        print(self.template.shape)
         self.template_height = self.template.shape[0]
         self.template_width = self.template.shape[1]
         if method: self.method = method
