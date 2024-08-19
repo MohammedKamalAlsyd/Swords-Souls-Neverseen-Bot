@@ -25,10 +25,8 @@ class Screen:
     global_TL_y = 0
 
 
-    def __init__(self,window_name=None,max_fps=30,borders_pixels = 8,titlebar_pixels=31):
+    def __init__(self,window_name=None,borders_pixels = 8,titlebar_pixels=31):
         self._window_name = window_name
-        self.max_fps = max_fps
-        self.interval = 1.0 / max_fps  # Interval in seconds
         self._lock = Lock()
 
         if self._window_name:
@@ -97,12 +95,6 @@ class Screen:
         win32gui.ReleaseDC(self._hwnd, wDC)
         win32gui.DeleteObject(dataBitMap.GetHandle())
 
-        # Enforce the maximum FPS
-        elapsed_time = time.time() - start_time
-        sleep_time = self.interval - elapsed_time
-        if sleep_time > 0:
-            time.sleep(sleep_time)
-
         return img
 
 
@@ -110,6 +102,10 @@ class Screen:
         self._stopped=False
         t = Thread(target=self._run)
         t.start()
+
+
+    def stop(self):
+        self._stopped = True
 
 
     def _run(self):

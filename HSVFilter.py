@@ -68,17 +68,24 @@ class HsvFilter:
         cv.createTrackbar('S Max', self.trackbar_window_name, 0, 255, nothing)
         cv.createTrackbar('V Max', self.trackbar_window_name, 0, 255, nothing)
 
-        # Set default value for Max HSV trackbars
-        cv.setTrackbarPos('H Max', self.trackbar_window_name, 179)
-        cv.setTrackbarPos('S Max', self.trackbar_window_name, 255)
-        cv.setTrackbarPos('V Max', self.trackbar_window_name, 255)
-
-
         # trackbars for increasing/decreasing saturation and value
         cv.createTrackbar('S Inc', self.trackbar_window_name, 0, 255, nothing)
         cv.createTrackbar('S Dec', self.trackbar_window_name, 0, 255, nothing)
         cv.createTrackbar('V Inc', self.trackbar_window_name, 0, 255, nothing)
         cv.createTrackbar('V Dec', self.trackbar_window_name, 0, 255, nothing)
+
+
+        # Set default value for Max HSV trackbars
+        cv.setTrackbarPos('H Min', self.trackbar_window_name, 0)
+        cv.setTrackbarPos('S Min', self.trackbar_window_name, 0)
+        cv.setTrackbarPos('V Min', self.trackbar_window_name, 100)
+        cv.setTrackbarPos('H Max', self.trackbar_window_name, 179)
+        cv.setTrackbarPos('S Max', self.trackbar_window_name, 132)
+        cv.setTrackbarPos('V Max', self.trackbar_window_name, 255)
+        cv.setTrackbarPos('S Inc', self.trackbar_window_name, 0)
+        cv.setTrackbarPos('S Dec', self.trackbar_window_name, 0)
+        cv.setTrackbarPos('V Inc', self.trackbar_window_name, 50)
+        cv.setTrackbarPos('V Dec', self.trackbar_window_name, 0)
 
         # given an image and an HSV filter, apply the filter and return the resulting image.
         # if a filter is not supplied, the control GUI trackbars will be used

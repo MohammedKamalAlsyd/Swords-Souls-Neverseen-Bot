@@ -1,6 +1,7 @@
 import cv2 as cv
 import numpy as np
 from threading import Thread, Lock
+from HSVFilter import HsvFilter, HsvValues
 
 class vision:
     # Threading Properties
@@ -9,6 +10,7 @@ class vision:
     _rectangles = np.array([], dtype=np.int32).reshape(0, 4)
     _screenshot = None
     # Class Properties
+    _hsv_filter = None
     template = None
     template_width = None
     template_height = None
@@ -24,6 +26,7 @@ class vision:
 
 
     def __init__(self,template_path,new_width,new_height,method = None):
+        self._hsv_filter = HsvFilter()
         self._lock = Lock()
         # Transform Template Size to work on different screen sizes
         try:
@@ -31,9 +34,10 @@ class vision:
         except:
             print(f"Failed to read {template_path}")
             exit(0)
+        print(self.template.shape)
         width_scale, height_scale = self._calculate_rescale_percentage(new_width,new_height)  # Need to get Curr Windows Size
         self.template = cv.resize(self.template, None, fx=width_scale, fy=height_scale, interpolation=cv.INTER_LINEAR)
-
+        print(self.template.shape)
         self.template_height = self.template.shape[0]
         self.template_width = self.template.shape[1]
         if method: self.method = method
@@ -58,13 +62,23 @@ class vision:
             print('Warning: too many results, raise the threshold.')
             rectangles = rectangles[:max_results]
 
+        if isinstance(rectangles, tuple):
+            return np.array([], dtype=np.int32).reshape(0, 4), None # 4 representing (x, y, w, h)
+
+
         return rectangles, weights
 
 
-    def start(self,threshold):
+    def start(self,threshold, debug_mode):
+        self._debug_mode = debug_mode
+        if debug_mode: self._hsv_filter.initControlGUI()
         self._stopped = False
         t = Thread(target=self._run, args=(threshold,))
         t.start()
+
+
+    def stop(self):
+        self._stopped = True
 
 
     def _run(self,threshold):
@@ -78,9 +92,10 @@ class vision:
                 self._lock.release()
 
 
-    def update(self, screenshot):
+    def update(self, screenshot, hsv_values = None):
         self._lock.acquire()
-        self._screenshot = screenshot
+        if self._debug_mode: self._screenshot = self._hsv_filter.applyHSVFilter(screenshot)
+        else: self._screenshot = self._hsv_filter.applyHSVFilter(screenshot, hsv_values)  # Apply Best Values
         self._lock.release()
 
 
@@ -88,8 +103,12 @@ class vision:
         return self._rectangles
 
 
+    def getScreenshot(self):
+        return self._screenshot
+
+
     @staticmethod
-    def drawRectangles(img,rectangles,line_color = (0, 255, 0),line_type = cv.LINE_4,thickness=2):
+    def drawRectangles(img,rectangles,line_color = (255, 0, 0),line_type = cv.LINE_4,thickness=2):
         for (x, y, w, h) in rectangles:
             top_left = (x, y)
             bottom_right = (x + w, y + h)
