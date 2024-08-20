@@ -3,14 +3,13 @@ import win32ui
 import win32con
 import numpy as np
 import cv2 as cv
-import time
 from threading import Thread, Lock
 
 
 class Screen:
     # Threading Properties
-    _stopped = True # To Stop Capture if Stopped
-    _lock = None # Act as Semaphore
+    _stopped = True  # To Stop Capture if Stopped
+    _lock = None  # Act as Semaphore
     _screenshot = None
     # Class Properties
     _window_name = None
@@ -24,8 +23,7 @@ class Screen:
     global_TL_x = 0
     global_TL_y = 0
 
-
-    def __init__(self,window_name=None,borders_pixels = 8,titlebar_pixels=31):
+    def __init__(self, window_name=None, borders_pixels=8, titlebar_pixels=31):
         self._window_name = window_name
         self._lock = Lock()
 
@@ -37,10 +35,9 @@ class Screen:
         else:
             self._hwnd = win32gui.GetDesktopWindow()
 
-        rect = win32gui.GetWindowRect(self._hwnd) # (TL_x,TL_y,width,height)
+        rect = win32gui.GetWindowRect(self._hwnd)  # (TL_x,TL_y,width,height)
         self._w = rect[2] - rect[0]
         self._h = rect[3] - rect[1]
-
 
         # apply some croping as pywin32 capture the whole windows including the borders
         if self._window_name:
@@ -53,20 +50,13 @@ class Screen:
         self.global_TL_x = rect[0] + self.local_TL_x
         self.global_TL_y = rect[1] + self.local_TL_y
 
-
-
     def getWindowDim(self):
-        return self._w,self._h
-
+        return self._w, self._h
 
     def get_screen_position(self, pos):
         return (pos[0] + self.global_TL_x, pos[1] + self.global_TL_y)
 
-
     def _capture(self):
-        # To Capture 1 Frame Time
-        start_time = time.time()
-
         # Get the window device context (DC)
         wDC = win32gui.GetWindowDC(self._hwnd)
         dcObj = win32ui.CreateDCFromHandle(wDC)
@@ -97,16 +87,13 @@ class Screen:
 
         return img
 
-
     def start(self):
-        self._stopped=False
+        self._stopped = False
         t = Thread(target=self._run)
         t.start()
 
-
     def stop(self):
         self._stopped = True
-
 
     def _run(self):
         while not self._stopped:
@@ -117,10 +104,8 @@ class Screen:
             self._screenshot = screenshot
             self._lock.release()
 
-
     def getCurrScreen(self):
         return self._screenshot
-
 
     @staticmethod
     def listWindowsNames():

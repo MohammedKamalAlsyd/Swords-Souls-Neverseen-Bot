@@ -1,10 +1,8 @@
 from Vision import vision
 from WindowCapture import Screen
-from HSVFilter import HsvFilter, HsvValues
+from HSVFilter import HsvValues
 from time import time
 from Bot import Bot
-from threading import Thread
-import pyautogui
 import cv2 as cv
 
 if __name__ == "__main__":
@@ -13,7 +11,7 @@ if __name__ == "__main__":
     w, h = scr.getWindowDim()
     vis = vision("Data/Templates/Target.png", w, h)
     hsv_values = HsvValues(0, 0, 100, 179, 132, 255, 0, 0, 50, 0)  # Best Filter After Debugging
-    game_bot = Bot(10,300)
+    game_bot = Bot(10, 300)
 
     # Initialize Some Variables
     loop_time = time()
